@@ -140,3 +140,78 @@ on c.country_id = cty.country_id
 where cty.country='Canada';
 
 /*7d*/
+SELECT  f.title FROM film f
+ inner join film_category fc
+ on f.film_id = fc.film_id
+ inner join category c
+ on fc.category_id = c.category_id
+ where c.name='Family';
+ 
+ /*7e*/
+ select f.title, i.film_id, count(1) freq_rents from inventory i
+inner join rental r
+on i.inventory_id = r.inventory_id
+inner join film f
+on i.film_id = f.film_id
+group by i.film_id
+order by count(1) desc;
+
+/*7f*/
+SELECT s.store_id, Sum(p.amount) FROM payment p
+inner join rental r 
+on p.rental_id = r.rental_id
+inner join inventory i 
+on r.inventory_id = i.inventory_id 
+inner join store s 
+on i.store_id = s.store_id
+group by s.store_id
+order by s.store_id;
+
+/*7g*/
+select s.store_id, c.city, conty.country from store s 
+inner join address a 
+on s.address_id = a.address_id
+inner join city c 
+on a.city_id = c.city_id 
+inner join country conty 
+on c.country_id = conty.country_id;
+
+/*7h*/
+select c.name, sum(p.amount) from payment p
+inner join rental r 
+on p.rental_id = r.rental_id
+inner join inventory i  
+on r.inventory_id = i.inventory_id
+inner join film f
+on i.film_id = f.film_id
+inner join film_category fc 
+on f.film_id = fc.film_id
+inner join category c
+on fc.category_id = c.category_id
+group by c.name
+order by sum(p.amount) desc
+limit 5;
+
+/*8a*/
+create or replace view v_top_five_genres
+as
+select c.name genres, sum(p.amount) gross_income from payment p
+inner join rental r 
+on p.rental_id = r.rental_id
+inner join inventory i  
+on r.inventory_id = i.inventory_id
+inner join film f
+on i.film_id = f.film_id
+inner join film_category fc 
+on f.film_id = fc.film_id
+inner join category c
+on fc.category_id = c.category_id
+group by c.name
+order by sum(p.amount) desc
+limit 5;
+
+/*8b*/
+select * from v_top_five_genres;
+
+/*8c*/
+drop view v_top_five_genres;
