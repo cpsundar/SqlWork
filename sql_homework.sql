@@ -1,16 +1,5 @@
 use sakila;
-select * from actor;
 
-create table test1 (
-id_1 int
-);
-
-create table if not exists address  (
-
-);
-
-
-if not exists 
 
 /* 1a */
 select first_name, last_name from actor;
@@ -21,7 +10,7 @@ select concat(first_name, ' ', last_name) as 'Actor Name' from actor;
 select actor_id, first_name, last_name from actor
 where first_name like 'Joe';
 
-/* 2a */
+/* 2b */
 select actor_id, first_name, last_name from actor
 where last_name like '%GEN%';
 
